@@ -1,13 +1,13 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SharedValue } from "./src/learning/sharedValue";
+import { SharedValueVsJsThread } from "./src/learning/sharedValueVsJsThread";
 
 export default function App() {
   return (
     <View style={styles.container}>
       <SharedValue />
-      <StatusBar style="auto" />
+      {/* <SharedValueVsJsThread /> */}
     </View>
   );
 }

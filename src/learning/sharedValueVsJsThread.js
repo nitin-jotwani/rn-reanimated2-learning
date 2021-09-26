@@ -1,7 +1,7 @@
 // Demonstrating Shared Value vs JS thread. How it works in UI thread
 import React from "react";
 import {
-  Text,
+  StyleSheet,
   TouchableOpacity,
   View,
   Animated as RNAnimated,
@@ -17,42 +17,50 @@ export const SharedValueVsJsThread = () => {
   const test = useSharedValue(0);
   const boxColorAnimationValue = new RNAnimated.Value(0);
   jsThreadBusy(true);
-  const testWorklet = () => {
-    "worklet";
-    test.value = withTiming(200, { duration: 5000 });
-  };
-  const testJS = () => {
-    RNAnimated.timing(boxColorAnimationValue, {
-      toValue: 200,
-      duration: 5000,
-    }).start();
-  };
+  const boxAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: test.value,
+      },
+    ],
+  }));
   const RNAnimatedStyle = {
     transform: [{ translateX: boxColorAnimationValue }],
   };
   return (
-    <Animated.View>
+    <View style={styles.container}>
       <TouchableOpacity
         onPress={() => {
-          testWorklet();
-          testJS();
+          test.value = withTiming(300, { duration: 5000 });
+          RNAnimated.timing(boxColorAnimationValue, {
+            toValue: 300,
+            duration: 5000,
+          }).start();
         }}
       >
         <View>
-          <RNAnimated.Text style={RNAnimatedStyle}>State Value</RNAnimated.Text>
-          <Animated.Text
-            style={useAnimatedStyle(() => ({
-              transform: [
-                {
-                  translateX: test.value,
-                },
-              ],
-            }))}
-          >
-            Shared Value
-          </Animated.Text>
+          <Animated.View style={[styles.box1, boxAnimatedStyle]} />
+          <RNAnimated.View style={[styles.box2, RNAnimatedStyle]} />
         </View>
       </TouchableOpacity>
-    </Animated.View>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+  },
+  box1: {
+    width: 100,
+    height: 100,
+    borderRadius: 6,
+    backgroundColor: "red",
+  },
+  box2: {
+    width: 100,
+    height: 100,
+    borderRadius: 6,
+    backgroundColor: "blue",
+  },
+});

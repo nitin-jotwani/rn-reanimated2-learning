@@ -1,6 +1,6 @@
 // What is shared value & how to use
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -9,27 +9,34 @@ import Animated, {
 
 export const SharedValue = () => {
   const test = useSharedValue(0);
+  const boxAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: test.value,
+      },
+    ],
+  }));
   return (
-    <Animated.View>
+    <View style={styles.container}>
       <TouchableOpacity
         onPress={() => {
-          test.value = withTiming(200, { duration: 500 });
+          test.value = withTiming(300, { duration: 500 });
         }}
       >
-        <View>
-          <Animated.Text
-            style={useAnimatedStyle(() => ({
-              transform: [
-                {
-                  translateX: test.value,
-                },
-              ],
-            }))}
-          >
-            Shared Value
-          </Animated.Text>
-        </View>
+        <Animated.View style={[styles.box, boxAnimatedStyle]} />
       </TouchableOpacity>
-    </Animated.View>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+  },
+  box: {
+    width: 100,
+    height: 100,
+    borderRadius: 6,
+    backgroundColor: "red",
+  },
+});
