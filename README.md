@@ -1,1 +1,1 @@
-# rn-reanimated2-learning
+# rn-reanimated2-learning-guide
