@@ -6,14 +6,14 @@ import { runOnJS, runOnUI } from "react-native-reanimated";
 export const Worklet = () => {
   const runOnUIThread = () => {
     "worklet";
-    return "from runOnUIThread";
+    return "from runOnUIThread worklet";
   };
   const runOnJSThread = () => {
     return "from runOnJSThread";
   };
-  const helloWorket = (from) => {
+  const helloWorketFunc = (from) => {
     "worklet";
-    console.log("from helloWorket", from);
+    console.log("from helloWorketFunc", from);
     const runOnUIResult = runOnUIThread();
     const runOnJSResult = runOnJSThread();
     /* 
@@ -25,8 +25,8 @@ export const Worklet = () => {
       - Inform reanimated that it is to be executed on JS thread by wrapping in runOnJS
         Eg. const runOnJSResult = runOnJS(runOnJSThread)();
      */
-    console.log("Run On UI Result: ", runOnUIResult);
-    console.log("Run On JS Result: ", runOnJSResult);
+    console.log("Run On UI Result:", runOnUIResult);
+    console.log("Run On JS Result:", runOnJSResult);
     /*
       runOnUIResult will be available as it's executed synchronously on UI thread
       runOnJSResult will be undefined as this will be executed on React Native JS thread. 
@@ -35,7 +35,7 @@ export const Worklet = () => {
   return (
     <TouchableOpacity
       onPress={() => {
-        runOnUI(helloWorket)("using runOnUI");
+        runOnUI(helloWorketFunc)("using runOnUI");
       }}
     >
       <Text>Testing Worklet</Text>
