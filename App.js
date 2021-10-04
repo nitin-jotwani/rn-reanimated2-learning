@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { SharedValue } from "./src/learning/sharedValue";
 import { SharedValueVsJsThread } from "./src/learning/sharedValueVsJsThread";
+import { AnimatedScrollHandler } from "./src/learning/useAnimatedScrollHandler";
 import { DerivedValue } from "./src/learning/useDerivedValue";
 import { Worklet } from "./src/learning/worklet";
 
@@ -11,7 +12,8 @@ export default function App() {
       {/* <SharedValue /> */}
       {/* <SharedValueVsJsThread /> */}
       {/* <Worklet /> */}
-      <DerivedValue />
+      {/* <DerivedValue /> */}
+      <AnimatedScrollHandler />
     </View>
   );
 }
